@@ -30,30 +30,30 @@ function Faq_Component() {
     });
   }, [data]);
 
-  useEffect(() => {
-    if (answerData.activeIndex !== 0) {
-      intervalId.current = setInterval(() => {
-        setAnswerData(prev => {
-          if (prev.activeIndex < data.length - 1) {
-            return {
-              question: data[prev.activeIndex + 1].question,
-              answer: data[prev.activeIndex + 1].answer,
-              activeIndex: prev.activeIndex + 1
-            };
-          } else {
-            setSeconds(0);
-            renderAnswer(0);
-            clearInterval(intervalId.current);
-            return prev;
-          }
-        });
-      }, 2000);
-    } else {
-      clearInterval(intervalId.current);
-    }
+  // useEffect(() => {
+  //   if (answerData.activeIndex !== 0) {
+  //     intervalId.current = setInterval(() => {
+  //       setAnswerData(prev => {
+  //         if (prev.activeIndex < data.length - 1) {
+  //           return {
+  //             question: data[prev.activeIndex + 1].question,
+  //             answer: data[prev.activeIndex + 1].answer,
+  //             activeIndex: prev.activeIndex + 1
+  //           };
+  //         } else {
+  //           setSeconds(0);
+  //           renderAnswer(0);
+  //           clearInterval(intervalId.current);
+  //           return prev;
+  //         }
+  //       });
+  //     }, 2000);
+  //   } else {
+  //     clearInterval(intervalId.current);
+  //   }
 
-    return () => clearInterval(intervalId.current);
-  }, [answerData.activeIndex, data, renderAnswer]);
+  //   return () => clearInterval(intervalId.current);
+  // }, [answerData.activeIndex, data, renderAnswer]);
 
   return (
     <div className="faq-container">
