@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import ContactForm from '../components/ContactForm';
+import '../components/contact.css';
 
-const ContactUs = () => {
-  return (
-    <div>
-      ContactUs
-    </div>
-  )
+function App() {
+    return (
+        <div className="App">
+            <ContactForm />
+        </div>
+    );
 }
 
-export default ContactUs;
+export default App;
