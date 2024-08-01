@@ -25,20 +25,22 @@ function Section({ title, content, isLastSection }) {
   }, []);
 
   return (
-    <div className="sep ml-44">
-      <h1
-        className={`pt-8 text-6xl text-center text-white mb-6 opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'fade-in' : ''}`}
-      >
-        {title}
-      </h1>
-      <div className={`w-11/12 h-5/6 p-0 m-0 overflow-x-hidden overflow-y-clip bg-white font-sans py-10 rounded-lg shadow-white shadow-md ${isLastSection ? 'pb-10' : ''}`}>
-        <div className="flex flex-col items-center justify-center px-10">
-          <section
-            ref={sectionRef}
-            className={`opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'fade-in' : ''}`}
-          >
-            <p className={`text-lg ${isVisible ? 'fade-in' : 'opacity-0'}`} style={{ color: 'rgb(9, 56, 96)'}}>{content}</p>
-          </section>
+    <div className="flex justify-center items-center w-full py-4">
+      <div className="w-full px-2 md:px-4 lg:px-8 xl:px-12">
+        <h1
+          className={`pt-4 text-4xl md:text-5xl lg:text-6xl text-center text-white mb-4 opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'fade-in' : ''}`}
+        >
+          {title}
+        </h1>
+        <div className={`w-full h-auto p-0 m-0 overflow-hidden bg-white font-sans py-8 px-6 rounded-lg shadow-lg ${isLastSection ? 'pb-4' : ''}`}>
+          <div className="flex flex-col items-center justify-center px-4 md:px-8">
+            <section
+              ref={sectionRef}
+              className={`opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'fade-in' : ''}`}
+            >
+              <p className={`text-base md:text-lg ${isVisible ? 'fade-in' : 'opacity-0'}`} style={{ color: 'rgb(9, 56, 96)' }}>{content}</p>
+            </section>
+          </div>
         </div>
       </div>
     </div>
