@@ -44,7 +44,7 @@ function Contact() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log('Input change:', name, value); // Debugging
+    console.log('Input change:', name, value); 
     setFormData({
       ...formData,
       [name]: value,
@@ -77,7 +77,7 @@ function Contact() {
   
         if (result.success) {
           setErrorMessage('');
-          // You can add any success handling logic here, e.g., clearing the form or showing a success message.
+        
         } else {
           setErrorMessage('There was an error submitting the form. Please try again.');
         }
