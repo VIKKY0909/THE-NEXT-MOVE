@@ -63,7 +63,7 @@ function Contact() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            access_key: 'YOUR_ACCESS_KEY',
+            access_key: 'Access key', //enter your access key
             ...formData,
           }),
         });
