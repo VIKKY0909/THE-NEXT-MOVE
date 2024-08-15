@@ -1,0 +1,123 @@
+/* Base styles for body and html */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Slider container */
+.all-blog-items {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Individual blog card styling */
+.blog-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  height: ;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 0 10px; /* Adjusted margin around each card for spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for better visual separation */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px); /* Slight lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image styling within blog cards */
+.blog-card img {
+  width: 100%;
+  height: 35vh;
+  object-fit: cover;
+}
+
+/* Content section within blog cards */
+.blog-content {
+  padding: 20px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+/* Blog information section */
+.blog-info {
+  display: flex;
+  justify-content: space-between;
+  color: #6941c6;
+  margin-bottom: 10px;
+}
+
+/* Styling for blog titles */
+.blog-card h3 {
+  margin: 0 0 10px;
+}
+
+/* Blog tags container */
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Individual tag styling */
+.tag {
+  background-color: #f2f4f7;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .blog-card {
+    height: 60vh;
+  }
+  .blog-card img {
+    height: 30vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-card {
+    height: auto;
+    width: 80%; /* Decrease the width of the card */
+  }
+  .blog-card img {
+    width: 100%; /* Decrease the width of the image */
+    height: 40vh; /* Increase the height of the image */
+  }
+}
+
+/* Slick slider custom styles */
+.slick-prev:before,
+.slick-next:before {
+  color: #ffffff;
+}
+
+.slick-dots {
+  bottom: -40px;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #ffffff;
+}
+
+/* Add padding to the slider to account for the card margins */
+.slick-list {
+  padding: 0 20px !important; /* Ensure padding to handle the new card margins */
+}
+
+/* Ensure flex display for proper spacing */
+.slick-slide > div {
+  display: flex;
+  justify-content: center; /* Centering the slides to ensure space between cards */
+}
