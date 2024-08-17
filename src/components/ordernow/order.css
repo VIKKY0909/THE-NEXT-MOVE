@@ -1,0 +1,348 @@
+
+  
+  .sep .content-wrapper {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sep .section-2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .sep .Rectangle-1316, .Rectangle-1319 {
+    width: 100%;
+    max-width: 1152px;
+    padding: 20px;
+    box-shadow: 2px 2px 30px 0 rgba(255, 255, 255, 0.5);
+    background-color: #e9ecef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+  }
+  
+  .sep .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sep .text-content {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .sep .Switch-R4 {
+    font-size: 6vw;
+    font-weight: bold;
+    color: #093860;
+    margin-bottom: 10px;
+  }
+  
+  .sep .Business-To-Retailer, .Business-To-Customer, .Business-To-Business {
+    font-size: 4vw;
+    color: #093860;
+    margin-bottom: 10px;
+  }
+  
+  .sep .image-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .sep img.file {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    object-fit: contain;
+  }
+  
+ .sep .h1 {
+    font-size: 6vw;
+    font-weight: normal;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+ .sep .content1 {
+    font-size: 4vw;
+    text-align: center;
+    color: #093860;
+  }
+  
+  .sep .container {
+    display: flex;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgb(255, 254, 254);
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .sep .contact-info, .contact-form {
+    padding: 30px;
+  }
+  
+  .sep .contact-info {
+    background-color: #495057;
+    width: 40%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .sep .contact-info h2 {
+    color: #ffffff;
+    margin-bottom: 120px;
+    font-size: 24px;
+  }
+  
+  .sep .contact-info ul {
+    margin-bottom: 50px;
+    list-style: none;
+  }
+  
+  .sep .contact-info li {
+    color: #ffffff;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+  }
+  .sep .ch{
+    padding-top: 30px;
+  }
+  
+  .sep .contact-info li i {
+    margin-right: 10px;
+  }
+  
+  .sep .contact-form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    color: #212529;
+  }
+  
+  .sep .contact-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .sep .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+  
+  .sep .form-half {
+    flex: 1;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sep .form-group label {
+    color: #495057;
+    margin-bottom: 5px;
+  }
+  
+  .sep .form-group input {
+    padding: 10px 10px 5px 0;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    font-size: 16px;
+    color: #495057;
+    background-color: transparent;
+    transition: border-color 0.3s;
+  }
+  
+  .sep .form-group input:focus {
+    outline: none;
+    border-bottom: 1px solid #212529;
+  }
+  
+  .sep .radio-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .sep .radio-group input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .sep .radio-group label {
+    margin-right: 15px;
+    font-size: 16px;
+    color: #495057;
+  }
+  
+  .sep .contact-form p {
+    font-size: 14px;
+    color: #495057;
+    margin-top: 20px;
+  }
+  
+  .sep button {
+    display: block;
+    width: max-content;
+    padding: 6px 15px;
+    background-color: #212529;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    margin-left: auto;
+    cursor: pointer;
+    margin-top: 50px;
+  }
+  
+  .sep button:hover {
+    background-color: #343a40;
+  }
+  
+  @media (min-width: 769px) {
+    .sep .Rectangle-1316 {
+      flex-direction: row;
+      align-items: center;
+      padding: 40px;
+    }
+  
+   .sep  .content {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .sep .text-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      text-align: left;
+    }
+  
+    .sep .Switch-R4 {
+      font-size: 42px;
+      text-align: left;
+    }
+  
+    .sep .Business-To-Retailer, .Business-To-Customer, .Business-To-Business {
+      font-size: 30px;
+      text-align: left;
+    }
+  
+    .sep .image-content {
+      flex-shrink: 0;
+      max-width: 50%;
+    }
+  
+  
+    .sep .h1 {
+      font-size: 42px;
+    }
+  
+    .sep .content1 {
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .sep .container {
+      flex-direction: column;
+    }
+    .sep .text-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      text-align: left;
+    }
+  
+    .sep .Switch-R4 {
+      font-size: 42px;
+      text-align: left;
+    }
+  
+    .sep .Business-To-Retailer, .Business-To-Customer, .Business-To-Business {
+      font-size: 30px;
+      text-align: left;
+    }
+  
+    .sep .image-content {
+      flex-shrink: 0;
+      max-width: 50%;
+    }
+  
+  
+    .sep .contact-info, .contact-form {
+      width: 100%;
+    }
+  
+    .sep .form-group {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .sep .form-group .form-half {
+      width: 100%;
+      margin-right: 0;
+    }
+  
+    .sep .form-half {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .sep .form-group .form-half + .form-half {
+      margin-top: 10px;
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .sep .fade-in {
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+  
+  .sep .hidden {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .sep .fade-in {
+    opacity: 1;
+  }
+  
+    
