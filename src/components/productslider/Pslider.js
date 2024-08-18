@@ -32,39 +32,50 @@ const product = [
 const Pslider = () => {
     const settings = {
         dots: false,
-        infinite: true, 
+        infinite: true,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
         arrows: true,
         responsive: [
             {
-                breakpoint: 780, // Tablet
+                breakpoint: 1024,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
                 },
             },
             {
-                breakpoint: 640, // Mobile
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    dots: true,
+                },
+            },
+            {
+                breakpoint: 480,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    dots:true,
+                    arrows: false,
                 },
             },
         ],
     };
 
     return (
-        <div className="product-slider w-10/12 mx-auto py-10">
-            <Slider {...settings}>
-                {product.map((product, index) => (
-                    <Pcard key={index} product={product} />
-                ))}
-            </Slider>
+        <div className='py-10'>
+            <header className="text-4xl text-white text-center font-light mb-10">
+                <p>Our Products</p>
+            </header>
+            <div className="w-11/12 mx-auto">
+                <Slider {...settings}>
+                    {product.map((product, index) => (
+                        <Pcard key={index} product={product} />
+                    ))}
+                </Slider>
+            </div>
         </div>
     );
 };

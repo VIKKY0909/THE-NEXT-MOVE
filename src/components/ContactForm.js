@@ -71,7 +71,7 @@ function ContactForm() {
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        access_key: 'access_key', //enter your access key
+                        access_key: 'access_key', 
                         firstName: formData.firstName,
                         lastName: formData.lastName,
                         email: formData.email,

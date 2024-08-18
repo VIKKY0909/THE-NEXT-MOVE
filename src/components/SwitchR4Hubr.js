@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import './SwitchR4Hub.css';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +23,7 @@ const SwitchR4Hub = ({ image, experience, title, description, imageStyle }) => {
 
     tl.fromTo(
       imageRef.current,
-      { x: -200,y:200, opacity: 0 },
+      { x: -200, opacity: 0 },
       { x: 0, y:0,opacity: 1 },
     
     )
@@ -61,7 +61,7 @@ const SwitchR4Hub = ({ image, experience, title, description, imageStyle }) => {
         </div>
         <div className="text-white lg:text-left text-center md:w-5/12 md:ml-16 p-4 md:p-0">
           <div className="text-orange-400 tracking-wide text-lg md:text-xl mb-2 md:mt-20" ref={expRef}>{experience}</div>
-          <h1 className="text-2xl md:text-4xl font-light mb-4" ref={titleRef}>{title}</h1>
+          <h1 className="text-2xl md:text-4xl font-light mb-4" ref={titleRef} >{title}</h1>
           <p className="text-base md:text-lg" ref={descRef}>{description}</p>
         </div>
       </div>

@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="flex items-center mb-4">
             <img src={HLogo} alt="TNM Logo" className="w-24 h-12 mr-3" />
             <div>
-              <h2 className="font-bold text-xl">The Next Move</h2>
+              <h2 className="font-bold text-xl text-black">The Next Move</h2>
             </div>
           </div>
           <p className="text-sm text-gray-600 mb-2">
@@ -32,7 +32,7 @@ const Footer = () => {
         <div>
           <h3 className="mb-2 text-sm font-bold text-gray-900">Website Links</h3>
           <ul className="text-gray-600">
-            <li><a href="#" className="hover:text-black">Home</a></li>
+            <li><a href="/" className="hover:text-black">Home</a></li>
             <li><a href="faq" className="hover:text-black">FAQs</a></li>
             <li><a href="blog" className="hover:text-black">Blogs</a></li>
             

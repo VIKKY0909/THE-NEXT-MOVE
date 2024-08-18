@@ -6,7 +6,7 @@ import ReviewBackground from '../../assets/ReviewBackground.png';
 const ReviewCard = ({ review }) => {
   return (
     <motion.div
-      className="relative w-full max-w-xs mx-auto my-4 p-6 overflow-hidden bg-cover bg-center"
+      className="relative w-full max-w-xs mr-auto ml:0 my-4 p-6 overflow-hidden bg-cover bg-center"
       initial={{ opacity: 0, marginTop: 100 }}
       animate={{ opacity: 1, marginTop: 0 }}
       transition={{ delay: 0.5 }}

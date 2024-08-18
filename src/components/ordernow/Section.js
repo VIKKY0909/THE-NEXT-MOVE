@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-function Section({ title, content, isLastSection }) {
+function Section({ id ,title, content, isLastSection }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 

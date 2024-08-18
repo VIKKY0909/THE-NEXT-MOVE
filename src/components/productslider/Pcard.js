@@ -1,39 +1,11 @@
-import React, { useRef, useEffect } from 'react';
-import gsap from 'gsap';
+import React from 'react';
+
 
 const Pcard = ({ product }) => {
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    gsap.fromTo(
-      cardRef.current,
-      { scale: 1 },
-      {
-        scale: 1.05,
-        duration: 0.3,
-        ease: 'power3.out',
-        paused: true,
-        reversed: true,
-        onHover: function () {
-          this.reversed() ? this.play() : this.reverse();
-        },
-      }
-    );
-
-    cardRef.current.addEventListener('mouseenter', () => {
-      gsap.to(cardRef.current, { scale: 1.05 });
-    });
-
-    cardRef.current.addEventListener('mouseleave', () => {
-      gsap.to(cardRef.current, { scale: 1 });
-    });
-  }, []);
-
+  
   return (
     <div
-      className="relative w-[350px] h-[466px] mx-auto flex flex-col bg-slate-50 items-center bg-azure transition-transform duration-300 ease-in-out hover:scale-105"
-      ref={cardRef}
-    >
+      className="relative w-full max-w-xs mr-auto ml-0 my-4 flex flex-col bg-slate-50 items-center bg-azure transition-transform duration-300 ease-in-out hover:scale-105">
       <div className="w-full">
         <img src={product.image} alt={product.name} className="h-60 w-full object-cover" />
       </div>

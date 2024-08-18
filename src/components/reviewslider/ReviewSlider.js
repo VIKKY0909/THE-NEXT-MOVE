@@ -50,11 +50,19 @@ const ReviewSlider = () => {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
-          arrows: false,
+          arrows: true,
           dots: true,
         },
+      },
+      {
+          breakpoint: 480, 
+          settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows:false,
+          },
       },
     ],
   };
