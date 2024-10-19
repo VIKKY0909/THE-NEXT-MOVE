@@ -1,0 +1,26 @@
+/* customFonts.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap');
+
+.ql-editor {
+  font-family: Arial, sans-serif; /* Default font */
+}
+
+.ql-font-arial {
+  font-family: Arial, sans-serif;
+}
+
+.ql-font-georgia {
+  font-family: Georgia, serif;
+}
+
+.ql-font-courier {
+  font-family: Courier, monospace;
+}
+
+.ql-font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+
+.ql-font-lobster {
+  font-family: 'Lobster', cursive;
+}

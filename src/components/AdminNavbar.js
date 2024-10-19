@@ -20,6 +20,17 @@ const AdminNavbar = () => {
             FAQs
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/dashboard/blogs" className="text-white">
+            Blogs
+          </NavLink>
+
+        </li>
+        <li>
+          <NavLink to="/dashboard/editblogs" className="text-white">
+            Edit Blog
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
