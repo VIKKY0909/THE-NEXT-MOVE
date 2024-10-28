@@ -6,7 +6,7 @@ const ReviewManager = () => {
   const [newReview, setNewReview] = useState({
     text: "",
     reviewerName: "",
-    rating: 5,
+    rating: 1,
   });
   const [image, setImage] = useState(null); // State to handle image file
   const [editReview, setEditReview] = useState(null);
@@ -37,7 +37,7 @@ const ReviewManager = () => {
   // Handle review creation
   const createReview = async () => {
     if (!newReview.text || !newReview.reviewerName || !image) {
-      setError("All fields and an image are required");
+      setError("Text, reviewer name, and image are required");
       return;
     }
 
@@ -47,22 +47,26 @@ const ReviewManager = () => {
       formData.append("text", newReview.text);
       formData.append("reviewerName", newReview.reviewerName);
       formData.append("rating", newReview.rating);
-      formData.append("image", image);
+      formData.append("image", image); // Append image file to FormData
 
-      const res = await fetch("http://localhost:5000/api/reviews/create", {
+      const res = await fetch("http://localhost:5000/api/reviews", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // If you have authentication middleware
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: formData, // Make sure this matches the form data structure
+        body: formData, // Send FormData
       });
 
       const response = await res.json();
 
       if (res.ok) {
         fetchReviews();
-        setNewReview({ text: "", reviewerName: "", rating: 5 });
-        setImage(null);
+        setNewReview({
+          text: "",
+          reviewerName: "",
+          rating: 1,
+        });
+        setImage(null); // Reset image
         setError("");
       } else {
         throw new Error(response.message || "Failed to create review");
@@ -77,8 +81,8 @@ const ReviewManager = () => {
 
   // Handle review updates
   const updateReview = async (id) => {
-    if (!editReview.text || !editReview.reviewerName || !image) {
-      setError("All fields and an image are required");
+    if (!editReview.text || !editReview.reviewerName) {
+      setError("Text and reviewer name are required for update");
       return;
     }
 
@@ -88,7 +92,7 @@ const ReviewManager = () => {
       formData.append("text", editReview.text);
       formData.append("reviewerName", editReview.reviewerName);
       formData.append("rating", editReview.rating);
-      if (image) formData.append("image", image);
+      if (image) formData.append("image", image); // Append image if updating
 
       const res = await fetch(`http://localhost:5000/api/reviews/${id}`, {
         method: "PUT",
@@ -104,7 +108,7 @@ const ReviewManager = () => {
         fetchReviews();
         setIsEditing(false);
         setEditReview(null);
-        setImage(null);
+        setImage(null); // Reset image
         setError("");
       } else {
         throw new Error(response.message || "Failed to update review");
@@ -143,7 +147,7 @@ const ReviewManager = () => {
     setEditReview(review);
   };
 
-  // Initial reviews load
+  // Initial review load
   useEffect(() => {
     fetchReviews();
   }, []);
@@ -159,7 +163,18 @@ const ReviewManager = () => {
         <h3 className="text-xl font-semibold mb-4">
           {isEditing ? "Edit Review" : "Create New Review"}
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input
+            type="text"
+            placeholder="Reviewer Name"
+            className="p-3 border border-gray-300 rounded-lg w-full"
+            value={isEditing ? editReview?.reviewerName : newReview.reviewerName}
+            onChange={(e) =>
+              isEditing
+                ? setEditReview({ ...editReview, reviewerName: e.target.value })
+                : setNewReview({ ...newReview, reviewerName: e.target.value })
+            }
+          />
           <input
             type="text"
             placeholder="Review Text"
@@ -172,31 +187,18 @@ const ReviewManager = () => {
             }
           />
           <input
-            type="text"
-            placeholder="Reviewer Name"
+            type="number"
+            placeholder="Rating (1-5)"
+            min="1"
+            max="5"
             className="p-3 border border-gray-300 rounded-lg w-full"
-            value={isEditing ? editReview?.reviewerName : newReview.reviewerName}
-            onChange={(e) =>
-              isEditing
-                ? setEditReview({ ...editReview, reviewerName: e.target.value })
-                : setNewReview({ ...newReview, reviewerName: e.target.value })
-            }
-          />
-          <select
             value={isEditing ? editReview?.rating : newReview.rating}
             onChange={(e) =>
               isEditing
                 ? setEditReview({ ...editReview, rating: e.target.value })
                 : setNewReview({ ...newReview, rating: e.target.value })
             }
-            className="p-3 border border-gray-300 rounded-lg w-full"
-          >
-            <option value={5}>5</option>
-            <option value={4}>4</option>
-            <option value={3}>3</option>
-            <option value={2}>2</option>
-            <option value={1}>1</option>
-          </select>
+          />
           {/* File input for Image Upload */}
           <input
             type="file"
@@ -226,7 +228,7 @@ const ReviewManager = () => {
             />
             <h3 className="text-xl font-semibold mb-2">{review.reviewerName}</h3>
             <p className="text-gray-700 mb-2">{review.text}</p>
-            <p className="text-yellow-500 mb-4">Rating: {review.rating} / 5</p>
+            <p className="text-gray-600 mb-4">Rating: {review.rating}</p>
             <div className="flex justify-between mt-auto">
               <button
                 onClick={() => handleEdit(review)}
