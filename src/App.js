@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute'; // Import the Protecte
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import BlogManager from './Pages/BlogManger.js';
+import ReviewManager from './Pages/ReviewManager.js';
 
 const App = () => {
   // Simulate user authentication (replace this with your actual authentication logic)
@@ -51,7 +52,7 @@ const App = () => {
           >
             <Route path="products" element={<ProductList />} />
             <Route path="blogs" element={<BlogManager/>}/>
-            
+            <Route path="reviews" element={<ReviewManager />} /> {/* Add route for ReviewManager */}
           </Route>
         </Routes>
       </div>
