@@ -1,17 +1,43 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Faq.css';
-import { faqData } from "../../data/FaqData";
 
 function Faq_Component() {
-  const data = faqData;
+  const [faqs, setFaqs] = useState([]); // State to store fetched FAQs
   const [answerData, setAnswerData] = useState({
-    question: data[0].question,
-    answer: data[0].answer,
+    question: '',
+    answer: '',
     activeIndex: 0
   });
 
   const intervalId = useRef(null);
   const [seconds, setSeconds] = useState(0);
+
+  // Fetch FAQ data from API
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/faqs');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setFaqs(data); // Set fetched data to state
+
+        // Set initial answer data if data is available
+        if (data.length > 0) {
+          setAnswerData({
+            question: data[0].question,
+            answer: data[0].answer,
+            activeIndex: 0
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching FAQs:', error);
+      }
+    };
+
+    fetchFaqs();
+  }, []); // Run once on mount
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,36 +50,11 @@ function Faq_Component() {
   const renderAnswer = useCallback((index) => {
     clearInterval(intervalId.current);
     setAnswerData({
-      question: data[index].question,
-      answer: data[index].answer,
+      question: faqs[index].question,
+      answer: faqs[index].answer,
       activeIndex: index
     });
-  }, [data]);
-
-  // useEffect(() => {
-  //   if (answerData.activeIndex !== 0) {
-  //     intervalId.current = setInterval(() => {
-  //       setAnswerData(prev => {
-  //         if (prev.activeIndex < data.length - 1) {
-  //           return {
-  //             question: data[prev.activeIndex + 1].question,
-  //             answer: data[prev.activeIndex + 1].answer,
-  //             activeIndex: prev.activeIndex + 1
-  //           };
-  //         } else {
-  //           setSeconds(0);
-  //           renderAnswer(0);
-  //           clearInterval(intervalId.current);
-  //           return prev;
-  //         }
-  //       });
-  //     }, 2000);
-  //   } else {
-  //     clearInterval(intervalId.current);
-  //   }
-
-  //   return () => clearInterval(intervalId.current);
-  // }, [answerData.activeIndex, data, renderAnswer]);
+  }, [faqs]);
 
   return (
     <div className="faq-container">
@@ -61,7 +62,7 @@ function Faq_Component() {
       <div className="questions-answer">
         <div className='questions-box'>
           <div className="questions">
-            {data.map((item, index) => (
+            {faqs.map((item, index) => (
               <div
                 key={index}
                 className={index === answerData.activeIndex ? 'question active' : 'question'}
@@ -83,9 +84,8 @@ function Faq_Component() {
           </div>
         </div>
         <div className="answer-box w-1/2 h-[90vh] bg-blue-50 p-10 rounded shadow-lg">
-            <h3 key={answerData.question} className="text-lg font-bold mb-4">{answerData.question}</h3>
-            <p key={answerData.answer.answer1} className="mb-4">{answerData.answer.answer1}</p>
-            <p key={answerData.answer.answer2}>{answerData.answer.answer2}</p>
+            <h3 className="text-lg font-bold mb-4">{answerData.question}</h3>
+            <p>{answerData.answer}</p>
         </div>
       </div>
     </div>

@@ -92,6 +92,13 @@
     overflow-y: scroll;
     margin-top: 10px;
   }
+  .info, .orderbtn {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Wraps flex items to prevent horizontal overflow */
+
   
   .pname {
     width: 100%;

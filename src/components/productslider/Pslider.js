@@ -1,35 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import Pcard from './Pcard';
+import axios from 'axios';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import pcb from '../../assets/pcb.png';
-
-const product = [
-    {
-        id: 1,
-        name: "Product 1",
-        price: 4500,
-        image: pcb,
-        intro: "Experience seamless assistance and support through our innovative customer-to-customer service platform. Connect with fellow smart home enthusiasts to share tips, troubleshoot issues, and discover new ways ",
-    },
-    {
-        id: 2,
-        name: "Product 2",
-        price: 4500,
-        image: pcb,
-        intro: "Experience seamless assistance and support through our innovative customer-to-customer service platform. Connect with fellow smart home enthusiasts to share tips, troubleshoot issues, and discover new ways ",
-    },
-    {
-        id: 3,
-        name: "Product 3",
-        price: 4500,
-        image: pcb,
-        intro: "Experience seamless assistance and support through our innovative customer-to-customer service platform. Connect with fellow smart home enthusiasts to share tips, troubleshoot issues, and discover new ways ",
-    },
-];
 
 const Pslider = () => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/products'); // Adjust URL as needed
+                setProducts(response.data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+        fetchProducts();
+    }, []);
+
     const settings = {
         dots: false,
         infinite: true,
@@ -38,29 +28,9 @@ const Pslider = () => {
         slidesToScroll: 1,
         arrows: true,
         responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    dots: true,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: false,
-                },
-            },
+            { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 1 }},
+            { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 1, dots: true }},
+            { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false }},
         ],
     };
 
@@ -71,8 +41,16 @@ const Pslider = () => {
             </header>
             <div className="w-11/12 mx-auto">
                 <Slider {...settings}>
-                    {product.map((product, index) => (
-                        <Pcard key={index} product={product} />
+                    {products.map((product) => (
+                        <Pcard 
+                            key={product._id} 
+                            product={{
+                                image: product.image,
+                                name: product.name,
+                                price: product.price,
+                                intro: product.shortDescription
+                            }} 
+                        />
                     ))}
                 </Slider>
             </div>

@@ -1,35 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import ReviewCard from './ReviewCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import h1 from '../../assets/h1.png';
-
-const reviews = [
-  {
-    avatar: h1,
-    name: 'Bang Upin',
-    position: 'Pedagang Asongan',
-    text: 'Terimakasih banyak, kini ruanganku menjadi lebih mewah dan terlihat mahal.',
-    rating: 5,
-  },
-  {
-    avatar: h1,
-    name: 'Ibuk Sukijan',
-    position: 'Ibu Rumah Tangga',
-    text: 'Terimakasih banyak, kini ruanganku menjadi lebih mewah dan terlihat mahal.',
-    rating: 4,
-  },
-  {
-    avatar: h1,
-    name: 'Mpok Ina',
-    position: 'Karyawan Swasta',
-    text: 'Sangat terjangkau untuk kantong saya yang tidak terlalu banyak.',
-    rating: 4,
-  },
-];
+import h1 from '../../assets/h1.png'; // Default avatar if image is not provided
 
 const ReviewSlider = () => {
+  const [reviews, setReviews] = useState([]); // State to store reviews
+  const [loading, setLoading] = useState(true); // State for loading status
+  const [error, setError] = useState(null); // State for error handling
+
+  // Fetch reviews from API
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/reviews');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setReviews(data); // Update state with fetched reviews
+      } catch (err) {
+        setError(err.message); // Set error message if there's an error
+      } finally {
+        setLoading(false); // Set loading to false once fetch is complete
+      }
+    };
+
+    fetchReviews();
+  }, []); // Empty dependency array to run once on mount
+
   const settings = {
     dots: false,
     infinite: true,
@@ -57,15 +57,25 @@ const ReviewSlider = () => {
         },
       },
       {
-          breakpoint: 480, 
-          settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              arrows:false,
-          },
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+        },
       },
     ],
   };
+
+  // Handle loading state
+  if (loading) {
+    return <div className="text-center text-white">Loading reviews...</div>;
+  }
+
+  // Handle error state
+  if (error) {
+    return <div className="text-center text-red-500">{error}</div>;
+  }
 
   return (
     <div className="py-10">
@@ -75,7 +85,15 @@ const ReviewSlider = () => {
       <div className="w-11/12 mx-auto">
         <Slider {...settings}>
           {reviews.map((review, index) => (
-            <ReviewCard key={index} review={review} />
+            <ReviewCard
+              key={index}
+              review={{
+                text: review.text,
+                name: review.reviewerName,
+                rating: review.rating,
+                avatar: review.image || h1 // Use default image if none provided
+              }}
+            />
           ))}
         </Slider>
       </div>

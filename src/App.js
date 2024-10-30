@@ -16,6 +16,7 @@ import './App.css';
 import BlogManager from './Pages/BlogManger.js';
 import ReviewManager from './Pages/ReviewManager.js';
 import FaqManager from './Pages/FaqManager.js';
+import BlogDetail from './Pages/BlogDetail.js';
 
 const App = () => {
   // Simulate user authentication (replace this with your actual authentication logic)
@@ -41,7 +42,7 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/znmd" element={<Login setIsAuthenticated={setIsAuthenticated} />} /> {/* Pass down login handler */}
-          
+          <Route path="/blog/:id" element={<BlogDetail />} />
           {/* Protected routes */}
           <Route
             path="/dashboard"
