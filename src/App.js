@@ -5,6 +5,7 @@ import OrderNow from './Pages/OrderNow.js';
 import ProductCatalog from './Pages/ProductCatalog.js';
 import Blog from './Pages/Blog.js';
 import ContactUs from './Pages/ContactUs.js';
+import ContactManager from './Pages/ContactManager.js'; // Import ContactManager
 import Navbar from './components/Navigation/NavBar.jsx';
 import Footer from './components/Footer/Footer.js';
 import Login from './Pages/Login.js';
@@ -41,7 +42,8 @@ const App = () => {
           <Route path="/product-catalog" element={<ProductCatalog />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/znmd" element={<Login setIsAuthenticated={setIsAuthenticated} />} /> {/* Pass down login handler */}
+          <Route path="/contact-manager" element={<ContactManager />} /> {/* New route for ContactManager */}
+          <Route path="/znmd" element={<Login setIsAuthenticated={setIsAuthenticated} />} /> {/* Pass down login handler */} 
           <Route path="/blog/:id" element={<BlogDetail />} />
           {/* Protected routes */}
           <Route
@@ -53,10 +55,10 @@ const App = () => {
             }
           >
             <Route path="products" element={<ProductList />} />
-            <Route path="blogs" element={<BlogManager/>}/>
-            <Route path="reviews" element={<ReviewManager/>}/>
-            <Route path="faqs" element={<FaqManager/>}/>
-
+            <Route path="blogs" element={<BlogManager />} />
+            <Route path="reviews" element={<ReviewManager />} />
+            <Route path="faqs" element={<FaqManager />} />
+            <Route path="contacts" element={<ContactManager />} /> {/* Optionally include in protected routes */}
           </Route>
         </Routes>
       </div>
