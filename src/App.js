@@ -13,7 +13,7 @@ import ProductList from './Pages/ProductList.js';
 import ProtectedRoute from './components/ProtectedRoute'; // Import the ProtectedRoute component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import BlogManager from './Pages/BlogManger.js';
+import BlogManager from './Pages/BlogManager.js';
 import ReviewManager from './Pages/ReviewManager.js';
 import FaqManager from './Pages/FaqManager.js';
 import BlogDetail from './Pages/BlogDetail.js';
