@@ -14,7 +14,8 @@ const ReviewSlider = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/reviews');
+        console.log(process.env.NEXT_PUBLIC_API_URL); // Should log: https://your-backend-service.onrender.com
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
