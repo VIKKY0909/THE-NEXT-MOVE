@@ -30,6 +30,13 @@ const Blog = () => {
     fetchPosts();
   }, []);
 
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    const text = div.textContent || div.innerText || "";
+    return text.length > 500 ? text.substring(0, 500) + "..." : text;
+  };
+
   const getFirstImage = (html) => {
     const div = document.createElement("div");
     div.innerHTML = html;
@@ -85,8 +92,10 @@ const Blog = () => {
                   {new Date(blog.createdAt).toLocaleDateString()}
                 </p>
                 <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
-                {/* Display short description from MongoDB */}
-                <p className="text-gray-700">{blog.shortDescription}</p>
+                <div
+                  className="text-gray-700"
+                  dangerouslySetInnerHTML={{ __html: stripHtml(blog.content) }}
+                ></div>
               </div>
             </div>
           </Link>
@@ -114,8 +123,10 @@ const Blog = () => {
                     {new Date(blog.createdAt).toLocaleDateString()}
                   </p>
                   <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
-                  {/* Display short description from MongoDB */}
-                  <p className="text-gray-700">{blog.shortDescription}</p>
+                  <div
+                    className="text-gray-700"
+                    dangerouslySetInnerHTML={{ __html: stripHtml(blog.content) }}
+                  ></div>
                 </div>
               </div>
             </Link>

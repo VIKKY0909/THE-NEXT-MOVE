@@ -5,7 +5,6 @@ import axios from "axios";
 const BlogManager = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  const [shortDescription, setShortDescription] = useState(""); // Short description state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [blogs, setBlogs] = useState([]);
@@ -40,8 +39,8 @@ const BlogManager = () => {
   }, []);
 
   const handleCreateOrUpdate = async () => {
-    if (!title || !shortDescription || !content) { // Include shortDescription in validation
-      setError("Title, short description, and content are required");
+    if (!title || !content) {
+      setError("Title and content are required");
       return;
     }
 
@@ -50,7 +49,6 @@ const BlogManager = () => {
 
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("shortDescription", shortDescription); // Append short description
     formData.append("content", content);
 
     if (srcImage) {
@@ -89,7 +87,6 @@ const BlogManager = () => {
 
   const handleEdit = (blog) => {
     setTitle(blog.title);
-    setShortDescription(blog.shortDescription); // Set short description when editing
     setContent(blog.content);
     setEditBlogId(blog._id);
     setIsEditing(true);
@@ -119,7 +116,6 @@ const BlogManager = () => {
 
   const resetForm = () => {
     setTitle("");
-    setShortDescription(""); // Reset short description
     setContent("");
     setIsEditing(false);
     setEditBlogId(null);
@@ -137,14 +133,6 @@ const BlogManager = () => {
         className="w-full p-2 mb-4 border rounded"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-      />
-      
-      <input
-        type="text"
-        placeholder="Short Description" // Short description input
-        className="w-full p-2 mb-4 border rounded"
-        value={shortDescription}
-        onChange={(e) => setShortDescription(e.target.value)}
       />
 
       <JoditEditor
@@ -179,7 +167,6 @@ const BlogManager = () => {
         {blogs.map((blog) => (
           <div key={blog._id} className="border border-gray-300 p-4 rounded-lg">
             <h3 className="text-xl font-semibold">{blog.title}</h3>
-            <p className="text-gray-600">{blog.shortDescription}</p> {/* Display short description */}
             <div
               className="mt-2 mb-4"
               dangerouslySetInnerHTML={{ __html: blog.content }}
