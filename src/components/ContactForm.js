@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ContactForm() {
+function ContactForm({ onSubmit }) {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -13,7 +13,6 @@ function ContactForm() {
         email: '',
         message: ''
     });
-    const [isSubmitted, setIsSubmitted] = useState(false);
 
     useEffect(() => {
         const container = document.getElementById('container');
@@ -61,8 +60,6 @@ function ContactForm() {
 
         if (validateForm()) {
             const container = document.getElementById('container');
-            const thankYouMessage = document.getElementById('thankYouMessage');
-
             try {
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
@@ -71,7 +68,7 @@ function ContactForm() {
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        access_key: 'access_key', 
+                        access_key: 'access_key', // Replace with your actual access key
                         firstName: formData.firstName,
                         lastName: formData.lastName,
                         email: formData.email,
@@ -87,9 +84,8 @@ function ContactForm() {
 
                     setTimeout(() => {
                         container.style.display = 'none';
-                        thankYouMessage.style.display = 'flex';
+                        onSubmit(); // Call the onSubmit prop to notify the ContactManager
                     }, 2000);
-                    setIsSubmitted(true);
                 } else {
                     alert('Something went wrong. Please try again.');
                 }
@@ -101,11 +97,11 @@ function ContactForm() {
 
     return (
         <div className='flex justify-center items-center min-h-screen bg-[#2c2c2c]'>
-            <div className={`flex flex-col md:flex-row bg-[#2c2c2c] text-white shadow-lg rounded-lg p-6 ${isSubmitted ? 'hidden' : 'block'}`} id="container">
-                <div className="w-full md:w-1/2 p-4">
-                    <h1 className="text-2xl font-bold mb-4">Contact us</h1>
-                    <p className="text-gray-300 mb-4">Subheading for description or instructions</p>
-                    <form id="contactForm" onSubmit={handleSubmit}>
+            <div className='flex flex-col md:flex-row bg-[#2c2c2c] text-white shadow-lg rounded-lg p-6' id='container'>
+                <div className='w-full md:w-1/2 p-4'>
+                    <h1 className='text-2xl font-bold mb-4'>Contact us</h1>
+                    <p className='text-gray-300 mb-4'>Subheading for description or instructions</p>
+                    <form id='contactForm' onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <label htmlFor="first-name" className="block text-sm font-medium text-gray-300">First name</label>
                             <input
@@ -170,9 +166,6 @@ function ContactForm() {
                         srcSet={`${process.env.PUBLIC_URL}/img.png 2x, ${process.env.PUBLIC_URL}/img.png 3x`}  
                         alt="contact" className="rounded-md" />
                 </div>
-            </div>
-            <div className={`thank-you-message ${isSubmitted ? 'flex' : 'hidden'} justify-center items-center bg-blue-500 text-white p-10 rounded-lg shadow-lg m-4`} id="thankYouMessage">
-                <p className="text-xl font-semibold text-center">Thanks for contacting us! We will get back to you soon.</p>
             </div>
         </div>
     );
