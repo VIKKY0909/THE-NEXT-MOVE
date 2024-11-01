@@ -11,7 +11,7 @@ const Pslider = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("api/products"); 
+                const response = await axios.get("http:loacalhost:5000api/products"); 
                 setProducts(response.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
