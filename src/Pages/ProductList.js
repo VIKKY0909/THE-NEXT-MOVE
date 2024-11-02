@@ -19,7 +19,7 @@ const ProductList = () => {
   // Fetch products from the backend
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/products", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/products`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -53,7 +53,7 @@ const ProductList = () => {
       formData.append("available", newProduct.available);
       formData.append("image", image); // Append image file to FormData
 
-      const res = await fetch("http://localhost:5000/api/products/create", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/products`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -102,7 +102,7 @@ const ProductList = () => {
       formData.append("available", editProduct.available);
       if (image) formData.append("image", image); // Append image if updating
 
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -132,7 +132,7 @@ const ProductList = () => {
   // Handle product deletion
   const deleteProduct = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

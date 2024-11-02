@@ -15,7 +15,7 @@ const ReviewSlider = () => {
     const fetchReviews = async () => {
       try {
          // Should log: https://your-backend-service.onrender.com
-        const response = await fetch(`http://localhost:5000/api/reviews`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -70,7 +70,10 @@ const ReviewSlider = () => {
 
   // Handle loading state
   if (loading) {
-    return <div className="text-center text-white">Loading reviews...</div>;
+    return <div className="flex justify-center items-center min-h-screen">
+          <div className="w-16 h-16 border-4 border-blue-500 border-dotted rounded-full animate-spin"></div>
+          <p className="ml-4 text-2xl">Loading Reviews...</p>
+        </div>;
   }
 
   // Handle error state

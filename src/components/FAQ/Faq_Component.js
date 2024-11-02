@@ -12,11 +12,10 @@ function Faq_Component() {
   const intervalId = useRef(null);
   const [seconds, setSeconds] = useState(0);
 
-  // Fetch FAQ data from API
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/faqs');
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/faqs`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

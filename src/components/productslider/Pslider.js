@@ -7,14 +7,19 @@ import "slick-carousel/slick/slick-theme.css";
 
 const Pslider = () => {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true); // State for loading status
+    const [error, setError] = useState(null);     // State for error handling
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http:loacalhost:5000api/products"); 
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/products`);
                 setProducts(response.data);
+                setLoading(false); // Set loading to false once products are fetched
             } catch (error) {
                 console.error("Error fetching products:", error);
+                setError("Failed to load products."); // Set error message
+                setLoading(false); // Stop loading even if there’s an error
             }
         };
         fetchProducts();
@@ -33,6 +38,17 @@ const Pslider = () => {
             { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false }},
         ],
     };
+
+    if (loading) {
+        return <div className="flex justify-center items-center min-h-screen">
+        <div className="w-16 h-16 border-4 border-blue-500 border-dotted rounded-full animate-spin"></div>
+        <p className="ml-4 text-2xl">Loading Product...</p>
+      </div>;
+    }
+
+    if (error) {
+        return <div className="text-center text-red-500">{error}</div>;
+    }
 
     return (
         <div className='py-10'>

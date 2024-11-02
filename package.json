@@ -14,11 +14,18 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^5.1.1",
+    "assert": "^2.1.0",
     "axios": "^1.7.7",
     "clsx": "^2.1.1",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.1",
     "dotenv": "^16.4.5",
-    "framer-motion": "^11.3.8",
+    "framer-motion": "^11.11.11",
     "jodit-react": "^4.1.2",
+    "os": "^0.1.2",
+    "os-browserify": "^0.3.0",
+    "path": "^0.12.7",
+    "path-browserify": "^1.0.1",
     "quill": "^2.0.2",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
@@ -33,6 +40,7 @@
     "react-scroll-motion": "^0.3.3",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
+    "stream-browserify": "^3.0.0",
     "styled-components": "^6.1.11",
     "tailwind-merge": "^2.4.0",
     "tinymce": "^7.3.0",
@@ -67,5 +75,10 @@
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4"
+  },
+  "browser": {
+    "crypto": "crypto-browserify",
+    "stream": "stream-browserify",
+    "assert": "assert"
   }
 }

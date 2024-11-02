@@ -5,13 +5,14 @@ import axios from "axios";
 const BlogManager = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  const [shortDescription, setShortDescription] = useState(""); // Short description state
+  const [shortDescription, setShortDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [blogs, setBlogs] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editBlogId, setEditBlogId] = useState(null);
   const [srcImage, setSrcImage] = useState(null);
+  const [isFetchingBlogs, setIsFetchingBlogs] = useState(true); // New loading state for fetching blogs
   const editor = useRef(null);
 
   const config = {
@@ -22,8 +23,9 @@ const BlogManager = () => {
   };
 
   const fetchBlogs = async () => {
+    setIsFetchingBlogs(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/blogs", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/blogs`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -32,6 +34,8 @@ const BlogManager = () => {
     } catch (err) {
       console.error("Error fetching blogs:", err);
       setError("Failed to fetch blogs");
+    } finally {
+      setIsFetchingBlogs(false);
     }
   };
 
@@ -40,7 +44,7 @@ const BlogManager = () => {
   }, []);
 
   const handleCreateOrUpdate = async () => {
-    if (!title || !shortDescription || !content) { // Include shortDescription in validation
+    if (!title || !shortDescription || !content) {
       setError("Title, short description, and content are required");
       return;
     }
@@ -50,7 +54,7 @@ const BlogManager = () => {
 
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("shortDescription", shortDescription); // Append short description
+    formData.append("shortDescription", shortDescription);
     formData.append("content", content);
 
     if (srcImage) {
@@ -59,8 +63,8 @@ const BlogManager = () => {
 
     try {
       const url = isEditing
-        ? `http://localhost:5000/api/blogs/${editBlogId}`
-        : "http://localhost:5000/api/blogs/create";
+        ? `${process.env.REACT_APP_API_URL}/api/blogs/${editBlogId}`
+        : `${process.env.REACT_APP_API_URL}/api/blogs/create`;
 
       const response = await axios({
         method: isEditing ? "put" : "post",
@@ -75,7 +79,7 @@ const BlogManager = () => {
       if (response.status === 200 || response.status === 201) {
         fetchBlogs();
         resetForm();
-        alert(isEditing ? "Blog updated successfully!" : "Blog created successfully!"); // Alert message
+        alert(isEditing ? "Blog updated successfully!" : "Blog created successfully!");
       } else {
         throw new Error("Failed to create/update blog");
       }
@@ -89,17 +93,18 @@ const BlogManager = () => {
 
   const handleEdit = (blog) => {
     setTitle(blog.title);
-    setShortDescription(blog.shortDescription); // Set short description when editing
+    setShortDescription(blog.shortDescription);
     setContent(blog.content);
     setEditBlogId(blog._id);
     setIsEditing(true);
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top when editing
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleDelete = async (blogId) => {
+    setLoading(true); // Show loading spinner during delete operation
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/blogs/${blogId}`,
+        `${process.env.REACT_APP_API_URL}/api/products/${blogId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -114,12 +119,14 @@ const BlogManager = () => {
     } catch (err) {
       console.error("Error deleting blog:", err);
       setError("Error deleting blog");
+    } finally {
+      setLoading(false);
     }
   };
 
   const resetForm = () => {
     setTitle("");
-    setShortDescription(""); // Reset short description
+    setShortDescription("");
     setContent("");
     setIsEditing(false);
     setEditBlogId(null);
@@ -141,7 +148,7 @@ const BlogManager = () => {
       
       <input
         type="text"
-        placeholder="Short Description" // Short description input
+        placeholder="Short Description"
         className="w-full p-2 mb-4 border rounded"
         value={shortDescription}
         onChange={(e) => setShortDescription(e.target.value)}
@@ -157,7 +164,6 @@ const BlogManager = () => {
         className="w-full mb-4"
       />
 
-      {/* Separate button and file input from editor */}
       <div className="flex items-center space-x-4 mt-4">
         <input
           type="file"
@@ -175,32 +181,37 @@ const BlogManager = () => {
       </div>
 
       <h2 className="text-2xl font-bold mt-8 mb-4">Blogs List</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {blogs.map((blog) => (
-          <div key={blog._id} className="border border-gray-300 p-4 rounded-lg">
-            <h3 className="text-xl font-semibold">{blog.title}</h3>
-            <p className="text-gray-600">{blog.shortDescription}</p> {/* Display short description */}
-            <div
-              className="mt-2 mb-4"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={() => handleEdit(blog)}
-                className="text-blue-600 hover:underline"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(blog._id)}
-                className="text-red-600 hover:underline"
-              >
-                Delete
-              </button>
+
+      {isFetchingBlogs ? (
+        <p className="text-8xl text-white">Loading blogs...</p> // Display loading message while fetching blogs
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {blogs.map((blog) => (
+            <div key={blog._id} className="border border-gray-300 p-4 rounded-lg bg-white">
+              <h3 className="text-xl font-semibold">{blog.title}</h3>
+              <p className="text-gray-600">{blog.shortDescription}</p>
+              <div
+                className="mt-2 mb-4"
+                dangerouslySetInnerHTML={{ __html: blog.content }}
+              />
+              <div className="flex justify-between">
+                <button
+                  onClick={() => handleEdit(blog)}
+                  className="text-blue-600 hover:underline"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(blog._id)}
+                  className="text-red-600 hover:underline"
+                >
+                  {loading ? "Deleting..." : "Delete"} {/* Show delete loading */}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

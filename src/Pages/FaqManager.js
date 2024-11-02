@@ -6,16 +6,20 @@ const FaqManager = () => {
   const [newFaq, setNewFaq] = useState({ question: '', answer: '' });
   const [editFaq, setEditFaq] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);  // Loading state
 
   // Fetch all FAQs
   const fetchFaqs = async () => {
+    setLoading(true);  // Start loading
     try {
-      const res = await fetch('http://localhost:5000/api/faqs');
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/faqs`);
       const data = await res.json();
       setFaqs(data);
+      setLoading(false);  // Stop loading
     } catch (err) {
       console.error(err);
       setError('Error fetching FAQs');
+      setLoading(false);  // Stop loading
     }
   };
 
@@ -27,11 +31,11 @@ const FaqManager = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/faqs/create', {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/faqs/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Add auth if needed
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify(newFaq),
       });
@@ -57,7 +61,7 @@ const FaqManager = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/faqs/${editFaq._id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/faqs/${editFaq._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -146,58 +150,65 @@ const FaqManager = () => {
         </button>
       </div>
 
-      {/* FAQ List */}
-      <div className="bg-white p-4 rounded-lg shadow-md">
-        <h3 className="font-semibold mb-4">FAQs</h3>
-        {faqs.map((faq) => (
-          <div key={faq._id} className="border-b border-gray-200 pb-4 mb-4">
-            {editFaq && editFaq._id === faq._id ? (
-              <div>
-                <input
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-lg mb-2 w-full"
-                  value={editFaq.question}
-                  onChange={(e) => setEditFaq({ ...editFaq, question: e.target.value })}
-                />
-                <textarea
-                  className="p-2 border border-gray-300 rounded-lg mb-2 w-full"
-                  value={editFaq.answer}
-                  onChange={(e) => setEditFaq({ ...editFaq, answer: e.target.value })}
-                />
-                <button
-                  onClick={updateFaq}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg mr-2"
-                >
-                  Update FAQ
-                </button>
-                <button
-                  onClick={cancelEdit}
-                  className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <div>
-                <p className="font-semibold">{faq.question}</p>
-                <p className="text-gray-700">{faq.answer}</p>
-                <button
-                  onClick={() => handleEditClick(faq)}
-                  className="bg-yellow-500 text-white px-4 py-2 rounded-lg mt-2 mr-2"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => deleteFaq(faq._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg mt-2"
-                >
-                  Delete
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+      {/* Loading Spinner */}
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid border-transparent"></div>
+        </div>
+      ) : (
+        /* FAQ List */
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <h3 className="font-semibold mb-4">FAQs</h3>
+          {faqs.map((faq) => (
+            <div key={faq._id} className="border-b border-gray-200 pb-4 mb-4">
+              {editFaq && editFaq._id === faq._id ? (
+                <div>
+                  <input
+                    type="text"
+                    className="p-2 border border-gray-300 rounded-lg mb-2 w-full"
+                    value={editFaq.question}
+                    onChange={(e) => setEditFaq({ ...editFaq, question: e.target.value })}
+                  />
+                  <textarea
+                    className="p-2 border border-gray-300 rounded-lg mb-2 w-full"
+                    value={editFaq.answer}
+                    onChange={(e) => setEditFaq({ ...editFaq, answer: e.target.value })}
+                  />
+                  <button
+                    onClick={updateFaq}
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg mr-2"
+                  >
+                    Update FAQ
+                  </button>
+                  <button
+                    onClick={cancelEdit}
+                    className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <p className="font-semibold">{faq.question}</p>
+                  <p className="text-gray-700">{faq.answer}</p>
+                  <button
+                    onClick={() => handleEditClick(faq)}
+                    className="bg-yellow-500 text-white px-4 py-2 rounded-lg mt-2 mr-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteFaq(faq._id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg mt-2"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -6,17 +6,24 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when login starts
+    setError(""); // Clear any previous error
+
     const res = await login(username, password);
+
     if (res.success) {
       localStorage.setItem("token", res.token); // Save JWT token
       navigate("/dashboard"); // Redirect to dashboard
     } else {
       setError("Invalid username or password");
     }
+
+    setLoading(false); // Reset loading state when login completes
   };
 
   return (
@@ -45,9 +52,12 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
+            className={`w-full text-white p-2 rounded-lg ${
+              loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+            }`}
+            disabled={loading} // Disable button when loading
           >
-            Login
+            {loading ? "Logging in..." : "Login"} {/* Change text based on loading */}
           </button>
         </form>
       </div>

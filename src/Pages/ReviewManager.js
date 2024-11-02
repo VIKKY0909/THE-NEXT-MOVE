@@ -17,7 +17,7 @@ const ReviewManager = () => {
   // Fetch reviews from the backend
   const fetchReviews = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/reviews", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -49,7 +49,7 @@ const ReviewManager = () => {
       formData.append("rating", newReview.rating);
       formData.append("image", image); // Append image file to FormData
 
-      const res = await fetch("http://localhost:5000/api/reviews", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/create`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -94,7 +94,7 @@ const ReviewManager = () => {
       formData.append("rating", editReview.rating);
       if (image) formData.append("image", image); // Append image if updating
 
-      const res = await fetch(`http://localhost:5000/api/reviews/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -124,7 +124,7 @@ const ReviewManager = () => {
   // Handle review deletion
   const deleteReview = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/reviews/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
